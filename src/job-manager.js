@@ -48,17 +48,27 @@ class JobManager {
     })
 
     const jobServiceRouter = express.Router()
-    jobServiceRouter.get('/jobs/:jobId/:authToken', (request, response) => {
+    app.use('/jobs-service/rest/v1/', jobServiceRouter)
+
+    jobServiceRouter.use('/jobs/:jobId/:authToken', (request, response, next) => {
       const job = this.jobs[request.params.jobId]
+      console.log('Hit middleware', request.params)
       if (!job) {
         response.status(HttpStatusCodes.NOT_FOUND).type('text/plain').send('no such job-id\n')
-      } else if (job.authToken !== request.params.authToken) {
+      } else if (request.params.authToken !== job.authToken) {
         response.status(HttpStatusCodes.FORBIDDEN).type('text/plain').send('Incorrect auth token\n')
       } else {
-        response.status(HttpStatusCodes.OK).type('text/plain').send('Found me!\n')
+        request.job = job
+        request.jobId = request.params.jobId
+        request.url = request.url.substr(`/jobs/${request.params.jobId}/${request.params.authToken}`.length)
+        next()
       }
     })
-    app.use('/jobs-service/rest/v1', jobServiceRouter)
+    const jobHandler = express.Router()
+    jobServiceRouter.use(jobHandler)
+    jobHandler.get('', (request, response) => {
+      response.status(HttpStatusCodes.OK).type('text/plain').send('Found me!\n')
+    })
 
     return new Promise((resolve, reject) => {
       const HOST = 'localhost'
