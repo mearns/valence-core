@@ -1,0 +1,23 @@
+{
+  "name": "valence-core",
+  "version": "0.0.1",
+  "description": "The core job manager for the valence shell.",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mearns/valence-core.git"
+  },
+  "keywords": [
+    "valence",
+    "shell"
+  ],
+  "author": "Brian Mearns",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mearns/valence-core/issues"
+  },
+  "homepage": "https://github.com/mearns/valence-core#readme"
+}
