@@ -1,8 +1,10 @@
 npm-debug.log*
 node_modules/
-dist/
+npmpackagejsonlist.config.js
+src/
+test/
 coverage/
 .nyc_output/
 reports/
-package-lock.json
+.travis.yml
 npm-shrinkwrap.json
